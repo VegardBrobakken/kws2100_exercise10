@@ -38,11 +38,9 @@ function convertFromProtobuf(
 
 export function useVehicles() {
   const [vehicleTable, setVehicleTable] = useState<Record<string, KwsVehicle>>(
-    JSON.parse(localStorage.getItem("vehicleTable") || "{}"),
+    {},
   );
-  useEffect(() => {
-    localStorage.setItem("vehicleTable", JSON.stringify(vehicleTable));
-  }, [vehicleTable]);
+  const [vehicles, setVehicles] = useState<KwsVehicle[]>([]);
 
   async function fetchVehiclePosition() {
     const res = await fetch(
@@ -75,6 +73,7 @@ export function useVehicles() {
       }
       return updated;
     });
+    setVehicles(vehicles);
   }
 
   useEffect(() => {
